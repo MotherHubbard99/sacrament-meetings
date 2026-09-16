@@ -26,8 +26,8 @@ export default function NavLinks() {
             className={`px-2 py-1 rounded transition-colors ${
               isActive
                 ? "text-blue-700 bg-blue-100"
-                : "text-gray-700 hover:text-blue-700"
-            }`}
+                  : "text-[#E9EAEB] hover:text-black"
+  }`}
           >
             {link.label}
           </Link>
