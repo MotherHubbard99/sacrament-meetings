@@ -6,14 +6,17 @@ import { headers } from "next/headers";
 
 export default async function MeetingsPage() {
   //const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/meetings`, { //vercel was erroring out about this, so I changed it to the below
-  const h = await headers();
-const origin = h.get("host");
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+  // const h = await headers();
+  // const origin = h.get("host");
+  // const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
-  const res = await fetch(`${protocol}://${origin}/api/meetings`, {
-    method: "GET",
+  // const res = await fetch(`${protocol}://${origin}/api/meetings`, {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const res = await fetch(`${baseUrl}/api/meetings`, {
+   method: "GET",
     cache: "no-store",
-  });
+   });
 
   const meetings: SacramentMeeting[] = await res.json();
 
