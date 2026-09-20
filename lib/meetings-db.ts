@@ -92,6 +92,24 @@ const meetings: SacramentMeeting[] = [
       { name: '', topic: '', type: 'none' },
     ],
     closingHymn: { number: 1020, title: 'Softly and Tenderly Jesus is Calling' },
+    closingPrayer: 'Sister Paul',
+    announcements: ['Ward temple night: June 10', 'Youth baptisms: June 15']
+  },
+  {
+    id: 6,
+    date: '2026-09-20',
+    meetingType: 'regular',
+    presiding: 'Bishop Smith',
+    conducting: 'Brother Squire',
+    openingHymn: { number: 1003, title: 'It is Well with My Soul' },
+    openingPrayer: 'Sister denim',
+    wardBusiness: [{ description: 'Sustaining of multiple callings' }],
+    stakeBusiness: false,
+    sacramentHymn: { number: 1008, title: "Bread of Life, Living Water" },
+    speakers: [
+      { name: '', topic: '', type: 'none' },
+    ],
+    closingHymn: { number: 1020, title: 'Softly and Tenderly Jesus is Calling' },
     closingPrayer: 'Sister Drean',
     announcements: ['Ward temple night: June 10', 'Youth baptisms: June 15']
   }
