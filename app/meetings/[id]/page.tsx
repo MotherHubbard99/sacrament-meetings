@@ -1,16 +1,12 @@
-console.log("IS SERVER?", typeof window === "undefined");
-
-
 import { getMeetingById } from "@/lib/meetings-db";
 import MeetingDetail from "@/components/MeetingDetail";
 
-export default async function MeetingDetailPage({
+export default function MeetingDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params; // Await the params promise to get the id        
-  const meeting = getMeetingById(Number(id)); // Call the function to get the meeting by id
+  const meeting = getMeetingById(Number(params.id));
 
   if (!meeting) {
     return <div className="p-6">Meeting not found.</div>;
