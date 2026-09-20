@@ -1,6 +1,4 @@
-"use client";
-
-import NavLinks from "./NavLinks";
+import HeaderNav from "./HeaderNav";
 
 export default function Header() {
   return (
@@ -10,7 +8,7 @@ export default function Header() {
       </div>
 
       <nav className="mt-4">
-        <NavLinks />
+        <HeaderNav />
       </nav>
     </header>
   );
