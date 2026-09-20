@@ -6,8 +6,7 @@ import { SacramentMeeting } from "@/lib/types";
 
 export default async function MeetingsPage() {
   try {
-    const base =
-      process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const base = process.env.NEXT_PUBLIC_BASE_UR || "http://localhost:3000";
 
     const res = await fetch(`${base}/api/meetings`, {
       method: "GET",
