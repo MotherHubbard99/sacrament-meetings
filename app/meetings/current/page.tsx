@@ -3,6 +3,7 @@ export const runtime = "nodejs";
 
 import { redirect } from "next/navigation";
 import { getMeetings } from "@/lib/meetings-db";
+import Link from "next/link";
 
 function getMostRecentSunday(): string {
   const today = new Date();
@@ -26,12 +27,10 @@ export default async function CurrentMeetingPage() {
           There is no sacrament meeting scheduled for the most recent Sunday
           ({sunday}). Please check the full list of meetings.
         </p>
-        <a
-          href="/meetings"
-          className="text-blue-600 underline hover:text-blue-800"
-        >
+        <Link href="/meetings"
+          className="text-blue-600 underline hover:text-blue-800">
           View All Meetings
-        </a>
+        </Link>
       </div>
     );
   }
