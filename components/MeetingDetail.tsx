@@ -1,6 +1,22 @@
-import { SacramentMeeting } from "@/lib/types";
+import type { SacramentMeeting } from "@/lib/types";
 
-export default function MeetingDetail({ meeting }: { meeting: SacramentMeeting }) {
+type Meeting = SacramentMeeting;
+
+export default function MeetingDetail({ meeting }: { meeting: Meeting }) {
+  // Announcements: text or text[]
+  const announcements = Array.isArray(meeting.announcements)
+    ? meeting.announcements
+    : typeof meeting.announcements === "string"
+    ? meeting.announcements.split("\n").map(a => a.trim())
+    : [];
+
+  // Speakers: jsonb or text
+  const speakers = Array.isArray(meeting.speakers)
+    ? meeting.speakers
+    : typeof meeting.speakers === "string"
+    ? meeting.speakers.split(",").map(s => ({ name: s.trim(), topic: "" }))
+    : [];
+
   return (
     <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-md border border-gray-200">
       <h1 className="text-3xl font-[var(--font-dynapuff)] text-gray-800 mb-4">
@@ -13,11 +29,11 @@ export default function MeetingDetail({ meeting }: { meeting: SacramentMeeting }
         <p><span className="font-semibold">Conducting:</span> {meeting.conducting}</p>
       </section>
 
-      {meeting.announcements && meeting.announcements.length > 0 && (
+      {announcements.length > 0 && (
         <section className="mb-6">
           <h2 className="text-xl font-semibold text-gray-700 mb-2">Announcements</h2>
           <ul className="list-disc list-inside">
-            {meeting.announcements.map((a, idx) => (
+            {announcements.map((a, idx) => (
               <li key={idx}>{a}</li>
             ))}
           </ul>
@@ -26,34 +42,32 @@ export default function MeetingDetail({ meeting }: { meeting: SacramentMeeting }
 
       <section className="mb-6">
         <h2 className="text-xl font-semibold text-gray-700 mb-2">Opening</h2>
-        <p><span className="font-semibold">Opening Hymn:</span> {meeting.openingHymn.number} — {meeting.openingHymn.title}</p>
+        <p><span className="font-semibold">Opening Hymn:</span> {meeting.openingHymn}</p>
         <p><span className="font-semibold">Opening Prayer:</span> {meeting.openingPrayer}</p>
       </section>
 
-      {meeting.wardBusiness && meeting.wardBusiness.length > 0 && (
+      {meeting.wardBusiness && (
         <section className="mb-6">
           <h2 className="text-xl font-semibold text-gray-700 mb-2">Ward Business</h2>
-          <ul className="list-disc list-inside">
-            {meeting.wardBusiness.map((item, idx) => (
-              <li key={idx}>{item.description}</li>
-            ))}
-          </ul>
+          <p>{meeting.wardBusiness}</p>
         </section>
       )}
 
       <section className="mb-6">
         <h2 className="text-xl font-semibold text-gray-700 mb-2">Sacrament</h2>
-        <p><span className="font-semibold">Sacrament Hymn:</span> {meeting.sacramentHymn.number} — {meeting.sacramentHymn.title}</p>
+        <p><span className="font-semibold">Sacrament Hymn:</span> {meeting.sacramentHymn}</p>
       </section>
 
-      {meeting.speakers && meeting.speakers.length > 0 && (
+      {speakers.length > 0 && (
         <section className="mb-6">
           <h2 className="text-xl font-semibold text-gray-700 mb-2">Speakers</h2>
           <ul className="list-disc list-inside">
-            {meeting.speakers.map((speaker, idx) => (
+            {speakers.map((speaker, idx) => (
               <li key={idx}>
-                <span className="font-semibold">{speaker.name}</span>
-                {speaker.topic && ` — ${speaker.topic}`}
+                <span className="font-semibold">
+                  {typeof speaker === "string" ? speaker : speaker.name}
+                </span>
+                {typeof speaker !== "string" && speaker.topic && ` — ${speaker.topic}`}
               </li>
             ))}
           </ul>
@@ -62,7 +76,7 @@ export default function MeetingDetail({ meeting }: { meeting: SacramentMeeting }
 
       <section className="mb-6">
         <h2 className="text-xl font-semibold text-gray-700 mb-2">Closing</h2>
-        <p><span className="font-semibold">Closing Hymn:</span> {meeting.closingHymn.number} — {meeting.closingHymn.title}</p>
+        <p><span className="font-semibold">Closing Hymn:</span> {meeting.closingHymn}</p>
         <p><span className="font-semibold">Closing Prayer:</span> {meeting.closingPrayer}</p>
       </section>
 

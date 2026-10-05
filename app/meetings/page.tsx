@@ -9,9 +9,9 @@ import { Pagination } from "@/components/Pagination";
 export default async function MeetingsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ query?: string; page?: string }>;
+  searchParams: Promise<{ query?: string; page?: string; created?: string }>;
 }) {
-  const { query = "", page = "1" } = await searchParams;
+  const { query = "", page = "1", created } = await searchParams;
 
   const base = process.env.BASE_URL || "http://localhost:3000";
 
@@ -45,6 +45,11 @@ export default async function MeetingsPage({
 
   return (
     <div className="space-y-4">
+      {created && (
+        <div className="p-3 mb-4 bg-green-100 text-green-800 rounded">
+          Meeting successfully created!
+        </div>
+)}
       <MeetingSearch />
       {meetings.map((m) => (
         <MeetingCard key={m.id} meeting={m} />
