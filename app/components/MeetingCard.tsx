@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { SacramentMeeting } from "@/lib/types";
-import DeleteMeetingButton from "@/components/DeleteMeetingButton";
+import { SacramentMeeting } from "@/app/lib/types";
+import DeleteMeetingButton from "@/app/components/DeleteMeetingButton";
 
 export default function MeetingCard({ meeting }: { meeting: SacramentMeeting }) {
   const speakers = Array.isArray(meeting.speakers)

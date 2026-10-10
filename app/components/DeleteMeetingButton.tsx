@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState } from "react";
-import { deleteMeeting } from "@/lib/actions";
+import { deleteMeeting } from "@/app/lib/actions";
 
 const initialState = { message: "", errors: {} };
 

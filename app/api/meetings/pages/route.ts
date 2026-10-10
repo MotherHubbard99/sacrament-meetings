@@ -1,4 +1,4 @@
-import { getMeetingsTotalPages } from "@/lib/meetings-db";
+import { getMeetingsTotalPages } from "@/app/lib/meetings-db";
 
 export const runtime = "nodejs";
 

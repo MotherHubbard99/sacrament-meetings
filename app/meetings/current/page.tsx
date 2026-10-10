@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 import { redirect } from "next/navigation";
-import { getMeetings } from "@/lib/meetings-db";
+import { getMeetings } from "@/app/lib/meetings-db";
 import Link from "next/link";
 
 function getMostRecentSunday(): string {

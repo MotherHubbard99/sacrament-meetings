@@ -4,10 +4,79 @@ import { neon } from '@neondatabase/serverless';
 import { revalidatePath } from 'next/dist/server/web/spec-extension/revalidate';
 import { redirect } from 'next/navigation';
 import { MeetingFormSchema } from './meeting-schema';
-
+import { getMeetingById } from '@/app/lib/meetings-db';
+import { auth } from '@/auth';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
 
 const sql = neon(process.env.DATABASE_URL!);
 
+//authenticate user action
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid email or password.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error; // re-throw so Next.js handles redirects correctly
+  }
+}
+
+async function requireOwnerSession() {
+  const session = await auth();
+  if (!session?.user) throw new Error('Not authenticated');
+  return session;
+}
+
+export async function createProject(formData: FormData) {
+  await requireOwnerSession();
+
+  const title = String(formData.get('title') ?? '');
+  const description = String(formData.get('description') ?? '');
+  const imageUrl = String(formData.get('imageUrl') ?? '');
+
+  await sql`
+    INSERT INTO projects (title, description, image_url)
+    VALUES (${title}, ${description}, ${imageUrl})
+  `;
+
+  revalidatePath('/dashboard/projects');
+  redirect('/dashboard/projects');
+}
+
+export async function updateProject(id: string, formData: FormData) {
+  await requireOwnerSession();
+
+  const title = String(formData.get('title') ?? '');
+  const description = String(formData.get('description') ?? '');
+  const imageUrl = String(formData.get('imageUrl') ?? '');
+
+  await sql`
+    UPDATE projects
+    SET title = ${title}, description = ${description}, image_url = ${imageUrl}
+    WHERE id = ${id}
+  `;
+
+  revalidatePath('/dashboard/projects');
+  redirect('/dashboard/projects');
+}
+
+export async function deleteProject(id: string) {
+  await requireOwnerSession();
+
+  await sql`DELETE FROM projects WHERE id = ${id}`;
+
+  revalidatePath('/dashboard/projects');
+}
 
 // State returned to the client form
 export type MeetingFormState = {

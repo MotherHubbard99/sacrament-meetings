@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import MeetingsNavWrapper from "@/components/MeetingsNavWrapper";
+import MeetingsNavWrapper from "@/app/components/MeetingsNavWrapper";
 
 export default function MeetingsLayout({ children }: { children: ReactNode }) {
   return (

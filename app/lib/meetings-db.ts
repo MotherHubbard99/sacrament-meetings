@@ -174,3 +174,14 @@ export async function updateMeeting(
 export async function deleteMeeting(id: number): Promise<boolean> {
   throw new Error('deleteMeeting: database implementation coming in Week 04');
 }
+
+export async function getUserByEmail(email: string) {
+  const rows = await sql`
+    SELECT *
+    FROM users
+    WHERE email = ${email}
+    LIMIT 1
+  `;
+
+  return rows[0] ?? null;
+}

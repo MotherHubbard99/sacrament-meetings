@@ -1,7 +1,7 @@
-import MeetingDetail from "@/components/MeetingDetail";
+import MeetingDetail from "@/app/components/MeetingDetail";
 import DeleteMeetingButton from "../../../components/DeleteMeetingButton";
-import { SacramentMeeting } from "@/lib/types";
-import { getMeetingById } from "@/lib/meetings-db";
+import { SacramentMeeting } from "@/app/lib/types";
+import { getMeetingById } from "@/app/lib/meetings-db";
 
 export default async function MeetingDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

@@ -1,6 +1,6 @@
-import { getMeetingById } from '@/lib/meetings-db';
+import { getMeetingById } from '@/app/lib/meetings-db';
 import { notFound } from 'next/navigation';
-import EditMeetingForm from '@/app/meetings/[id]/edit/EditMeetingForm';
+import EditMeetingForm from '@/app/dashboard/meetings/[id]/edit/EditMeetingForm';
 
 export default async function EditMeetingPage({ params }: { params: { id: string } }) {
     const meetingId = Number(params.id);

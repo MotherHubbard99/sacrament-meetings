@@ -1,10 +1,10 @@
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-import MeetingCard from "@/components/MeetingCard";
-import { SacramentMeeting } from "@/lib/types";
-import { MeetingSearch } from "@/components/MeetingSearch";
-import { Pagination } from "@/components/Pagination";
+import MeetingCard from "@/app/components/MeetingCard";
+import { SacramentMeeting } from "@/app/lib/types";
+import { MeetingSearch } from "@/app/components/MeetingSearch";
+import { Pagination } from "@/app/components/Pagination";
 
 export default async function MeetingsPage({
   searchParams,

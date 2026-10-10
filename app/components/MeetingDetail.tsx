@@ -1,4 +1,4 @@
-import type { SacramentMeeting } from "@/lib/types";
+import type { SacramentMeeting } from "@/app/lib/types";
 
 type Meeting = SacramentMeeting;
 

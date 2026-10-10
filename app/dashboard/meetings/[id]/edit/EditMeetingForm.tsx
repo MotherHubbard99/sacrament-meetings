@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState } from 'react';
-import { updateMeeting } from '@/lib/actions';
+import { updateMeeting } from '@/app/lib/actions';
 
 const initialState = {
   message: '',

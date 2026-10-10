@@ -1,7 +1,7 @@
 'use client';
 
 import { useActionState } from 'react';
-import { createMeeting } from '@/lib/actions';
+import { createMeeting } from '@/app/lib/actions';
 
 
 // Initial state for the create meeting form
