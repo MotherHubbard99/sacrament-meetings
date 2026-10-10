@@ -10,7 +10,8 @@ type HeaderNavProps = {
 
 export default function HeaderNav({ session }: HeaderNavProps) {
   return (
-    <nav className="mt-4 flex gap-4 font-[var(--font-dynapuff)] text-lg text-white">
+    <nav className="mt-4 flex gap-4 font-[var(--font-dynapuff)] text-lg text-black
+    ">
       <Link href="/" className="hover:underline">Home</Link>
       <Link href="/meetings" className="hover:underline">Meetings</Link>
 

@@ -5,7 +5,8 @@ import bcrypt from 'bcryptjs';
 import { authConfig } from './auth.config';
 import { getUserByEmail } from '@/app/lib/meetings-db';
 
-export const { auth, signIn, signOut } = NextAuth({
+// 1️⃣ Build your full authOptions object
+export const authOptions = {
   ...authConfig,
   providers: [
     Credentials({
@@ -20,11 +21,20 @@ export const { auth, signIn, signOut } = NextAuth({
         const user = await getUserByEmail(email);
         if (!user) return null;
 
-        const passwordsMatch = await bcrypt.compare(password, user.passwordHash);
+        const passwordsMatch = await bcrypt.compare(password, user.passwordhash);
         if (passwordsMatch) return user;
 
+        console.log("authorize() user:", user);
+        console.log("passwordhash:", user?.passwordhash);
+    
         return null;
       },
     }),
   ],
-});
+};
+
+// 2️⃣ Pass authOptions into NextAuth ONCE
+export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
+
+export const GET = handlers.GET;
+export const POST = handlers.POST;

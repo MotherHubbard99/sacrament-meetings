@@ -4,7 +4,6 @@ import { neon } from '@neondatabase/serverless';
 import { revalidatePath } from 'next/dist/server/web/spec-extension/revalidate';
 import { redirect } from 'next/navigation';
 import { MeetingFormSchema } from './meeting-schema';
-import { getMeetingById } from '@/app/lib/meetings-db';
 import { auth } from '@/auth';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
@@ -12,12 +11,18 @@ import { AuthError } from 'next-auth';
 const sql = neon(process.env.DATABASE_URL!);
 
 //authenticate user action
-export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData,
-) {
+export async function authenticate(prevState: string | undefined, formData: FormData) {
+  const email = formData.get('email');
+  const password = formData.get('password');
+
   try {
-    await signIn('credentials', formData);
+    await signIn('credentials', {
+      email,
+      password,
+      redirect: false
+    });
+
+    return undefined;
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -27,7 +32,7 @@ export async function authenticate(
           return 'Something went wrong.';
       }
     }
-    throw error; // re-throw so Next.js handles redirects correctly
+    throw error;
   }
 }
 
