@@ -5,7 +5,7 @@ import { logoutAction } from '@/app/actions/logout';
 import type { Session } from "next-auth";
 
 type HeaderNavProps = {
-  session: Session | null;
+  session?: Session | null;
 };
 
 export default function HeaderNav({ session }: HeaderNavProps) {
