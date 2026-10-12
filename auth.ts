@@ -2,12 +2,9 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import bcrypt from 'bcryptjs';
-import { authConfig } from './auth.config';
 import { getUserByEmail } from '@/app/lib/meetings-db';
 
-// 1️⃣ Build your full authOptions object
 export const authOptions = {
-  ...authConfig,
   providers: [
     Credentials({
       async authorize(credentials) {
@@ -19,21 +16,32 @@ export const authOptions = {
 
         const { email, password } = parsed.data;
         const user = await getUserByEmail(email);
-        if (!user) return null;
+        
+        console.log("User from DB:", user);
 
+          if (!user) {
+                console.log("User not found");
+                return null;
+            }
+
+        console.log("Comparing:", password, "with hash:", user.passwordhash);
         const passwordsMatch = await bcrypt.compare(password, user.passwordhash);
-        if (passwordsMatch) return user;
+        console.log("Passwords match:", passwordsMatch);
 
-        console.log("authorize() user:", user);
-        console.log("passwordhash:", user?.passwordhash);
-    
+    if (passwordsMatch) {
+        return {
+            id: user.id,
+            email: user.email,
+            name: user.display_name  
+        };
+    }
+                    
         return null;
       },
     }),
   ],
 };
 
-// 2️⃣ Pass authOptions into NextAuth ONCE
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
 
 export const GET = handlers.GET;

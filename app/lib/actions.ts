@@ -12,8 +12,8 @@ const sql = neon(process.env.DATABASE_URL!);
 
 //authenticate user action
 export async function authenticate(prevState: string | undefined, formData: FormData) {
-  const email = formData.get('email');
-  const password = formData.get('password');
+  const email = String(formData.get('email') ?? '');
+  const password = String(formData.get('password') ?? '');
 
   try {
     await signIn('credentials', {

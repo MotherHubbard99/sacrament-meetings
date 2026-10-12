@@ -183,5 +183,7 @@ export async function getUserByEmail(email: string) {
     LIMIT 1
   `;
 
+  console.log(rows[0]);
+
   return rows[0] ?? null;
 }
